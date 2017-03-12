@@ -73,9 +73,10 @@ def main_loop():
         if REPORT_TIME == 60:
             for load in loads:
                 load.push_statue()
+            REPORT_TIME = 0
                 
         REPORT_TIME += 1
-        time.sleep(10)
+        time.sleep(60)
 
         
 if __name__ == '__main__':
