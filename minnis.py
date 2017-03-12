@@ -50,7 +50,7 @@ def main_loop(codes):
             if last_statue != now_statue and i > 1:
                 open_notify(content.pre_name, content.code, content.statue)
             print('{}: {}, is now {}'.format(content.pre_name, content.code, content.statue))
-        time.sleep(20)
+        time.sleep(60)
         
 
         
