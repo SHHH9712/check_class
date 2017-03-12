@@ -36,25 +36,32 @@ def read_files():
     for i in r.readlines():
         codes.append([i.split()[0], i.split()[1]])
     return codes
+    r.close()
 
-def main_loop(codes):
+def main_loop():
     i = 0
     REPORT_TIME = 0
     now_statue = ''
     while True:
-        for code in codes:
+        PUSH_LIST = []  
+        for code in read_files():
             content = get_info(code)
             last_statue = now_statue
             now_statue = get_info(code).statue
             i += 1
             if last_statue != now_statue and i > 1:
                 open_notify(content.pre_name, content.code, content.statue)
-            print('{}: {}, is now {}'.format(content.pre_name, content.code, content.statue))
-            open_notify(content.pre_name, content.code, content.statue)
-        time.sleep(20)
+            PUSH_LIST.append([content.pre_name, content.code, content.statue])  
+        for push in PUSH_LIST:
+            print('{}: {}, is now {}'.format(push[0], push[1], push[2]))
+        if REPORT_TIME == 360:
+            for push in PUSH_LIST:
+                open_notify(push[0], push[1], push[2])
+            REPORT_TIME = 0
+        REPORT_TIME += 1
+        time.sleep(60)
         
-
         
 if __name__ == '__main__':
-    main_loop(read_files())
+    main_loop()
     
