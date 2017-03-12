@@ -43,7 +43,6 @@ class Lec:
         if self._last_statue != self._now_statue:
             self.open_notify()
             # print('push: {}'.format(self._code))
-        self.open_notify()
         print('class: {}, statue is :{}'.format(self._code, self._now_statue))
 
     def push_statue(self):
