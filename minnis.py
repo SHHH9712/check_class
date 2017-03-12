@@ -54,7 +54,7 @@ def main_loop():
             PUSH_LIST.append([content.pre_name, content.code, content.statue])  
         for push in PUSH_LIST:
             print('{}: {}, is now {}'.format(push[0], push[1], push[2]))
-        if REPORT_TIME == 360:
+        if REPORT_TIME == 60:
             for push in PUSH_LIST:
                 open_notify(push[0], push[1], push[2])
             REPORT_TIME = 0
