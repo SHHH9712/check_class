@@ -44,12 +44,12 @@ class Lec:
         self._now_statue = update_data[1]
         if self._last_statue != self._now_statue:
             self.open_notify()
-            print('push: {}'.format(self._code))
-        print('class: {}, statue is :{}'.format(self._code, self._now_statue))
+            # print('push: {}'.format(self._code))
+        # print('class: {}, statue is :{}'.format(self._code, self._now_statue))
 
     def push_statue(self):
         self.open_notify()
-        print('regular push: {}'.format(self._code))
+        # print('regular push: {}'.format(self._code))
         
 
 def read_files():
@@ -72,12 +72,12 @@ def main_loop():
         for load in loads:
             load.update()
 
-        if REPORT_TIME == 10:
+        if REPORT_TIME == 360:
             for load in loads:
                 load.push_statue()
                 
         REPORT_TIME += 1
-        time.sleep(2)
+        time.sleep(60)
 
         
 if __name__ == '__main__':
