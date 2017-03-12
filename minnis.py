@@ -14,9 +14,7 @@ post_2 = '&InstrName=&CourseTitle=&ClassType=ALL&Units=&Days=&StartTime=&EndTime
 
 
 class Lec:
-    def __init__(self, code, pre_name):
-        
-        
+    def __init__(self, code, pre_name):      
         self._pre_name = pre_name
         self._code = code
         
@@ -45,7 +43,8 @@ class Lec:
         if self._last_statue != self._now_statue:
             self.open_notify()
             # print('push: {}'.format(self._code))
-        # print('class: {}, statue is :{}'.format(self._code, self._now_statue))
+        self.open_notify()
+        print('class: {}, statue is :{}'.format(self._code, self._now_statue))
 
     def push_statue(self):
         self.open_notify()
@@ -77,7 +76,7 @@ def main_loop():
                 load.push_statue()
                 
         REPORT_TIME += 1
-        time.sleep(60)
+        time.sleep(10)
 
         
 if __name__ == '__main__':
