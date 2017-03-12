@@ -70,7 +70,7 @@ def main_loop():
         for load in loads:
             load.update()
 
-        if REPORT_TIME == 60:
+        if REPORT_TIME == 360:
             for load in loads:
                 load.push_statue()
             REPORT_TIME = 0
