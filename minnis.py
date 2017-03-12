@@ -39,6 +39,7 @@ def read_files():
 
 def main_loop(codes):
     i = 0
+    REPORT_TIME = 0
     now_statue = ''
     while True:
         for code in codes:
@@ -47,10 +48,15 @@ def main_loop(codes):
             now_statue = get_info(code).statue
             i += 1
             if last_statue != now_statue and i > 1:
-                open_notify()
+                open_notify(content.pre_name, content.code, content.statue)
             print('{}: {}, is now {}'.format(content.pre_name, content.code, content.statue))
         time.sleep(5)
+        if REPORT_TIME == 10:
+            open_notify(content.pre_name, content.code, content.statue)
+            REPORT_TIME = 0
+        REPORT_TIME += 1
 
+        
 if __name__ == '__main__':
     main_loop(read_files())
     
