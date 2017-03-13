@@ -62,8 +62,7 @@ class Lec:
         self._last_statue = self._now_statue
         self._now_statue = update_data[1]
         self._date = datetime.now().strftime('%H:%M:%S')
-        
-        if self._last_statue != 'OPEN' and self._now_statue == 'OPEN':
+        if str(self._last_statue) != str(self._now_statue):
             self.open_notify()
             postman(self)
             # print('push: {}'.format(self._code))
