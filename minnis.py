@@ -1,12 +1,14 @@
 import requests
 import json
 import time
+import smtplib
 from bs4 import BeautifulSoup
 from pushover import init, Client
 from collections import namedtuple
 
 #Class = namedtuple('Class', ['pre_name', 'name', 'code', 'teacher', 'time', 'last_statue', 'now_statue', 'i'])
 
+sender = 'mailbotalex7@gmail.com'
 url = 'https://www.reg.uci.edu/perl/WebSoc'
 head = {'Content-Type':'application/x-www-form-urlencoded'}
 post_1 = 'Submit=Display+Web+Results&YearTerm=2017-14&ShowComments=on&ShowFinals=on&Breadth=ANY&Dept=ALL&CourseNum=&Division=ANY&CourseCodes='
@@ -14,13 +16,15 @@ post_2 = '&InstrName=&CourseTitle=&ClassType=ALL&Units=&Days=&StartTime=&EndTime
 
 
 class Lec:
-    def __init__(self, code, pre_name):      
-        self._pre_name = pre_name
+    def __init__(self, code, user_name, mail):      
+        self._user_name = user_name
+        self._mail = mail
         self._code = code
         
         nns = self.get_info()
         
         self._name = nns[0]
+        self._time = 'time'
         self._last_statue = nns[1]
         self._now_statue = nns[1]
 
@@ -30,7 +34,11 @@ class Lec:
         # print(r.text)
         soup = BeautifulSoup(r.text, 'html.parser')
         list_class = soup.find_all(attrs = {'nowrap':"nowrap"})
-        return [list_class[0].string, list_class[-1].string]
+        names = []
+        for i in list_class[0].strings:
+            names.append(i)
+        real_name = ' '.join(names[0].string.split())
+        return [real_name, list_class[-1].string]
 
     def open_notify(self):
         init('afiq2ntpokxubmzt61j9ii5kf2w4o9')
@@ -40,13 +48,19 @@ class Lec:
         update_data = self.get_info()
         self._last_statue = self._now_statue
         self._now_statue = update_data[1]
+        
+        # self._time = new_time
+        
         if self._last_statue != self._now_statue:
             self.open_notify()
+            postman(self)
             # print('push: {}'.format(self._code))
         print('class: {}, statue is :{}'.format(self._code, self._now_statue))
+        #postman(self)
 
     def push_statue(self):
         self.open_notify()
+        
         # print('regular push: {}'.format(self._code))
         
 
@@ -54,7 +68,7 @@ def read_files():
     codes = []
     r = open('classes.txt')
     for i in r.readlines():
-        codes.append([i.split()[0], i.split()[1]])
+        codes.append([i.split()[0], i.split()[1], i.split()[2]])
     r.close()
     return codes
     
@@ -65,12 +79,13 @@ def main_loop():
         contents = read_files()
         loads = []
         for content in contents:
-            loads.append(Lec(content[0], content[1]))
+            loads.append(Lec(content[0], content[1], content[2]))
 
         for load in loads:
             load.update()
 
-        if REPORT_TIME == 360:
+        if REPORT_TIME == 20:
+            send_statue_mail(loads)
             for load in loads:
                 load.push_statue()
             REPORT_TIME = 0
@@ -78,7 +93,50 @@ def main_loop():
         REPORT_TIME += 1
         time.sleep(60)
 
-        
+
+def postman(lec):
+    
+    To = [lec._mail, 'shhh9712@gmail.com']
+    
+    subject = 'Your class {} [{}] statue has changed!'.format(lec._name, lec._code)
+    main = 'Class {} [{}] statue has changed statue \nFROM: {} \nTO: {} \nAT: {}'.format(lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
+
+    # print(subject)
+    # print(main)
+    
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+
+    
+
+    body = "From: {}\r\nTo: {}\r\nSubject: {}\r\n\n{}".format(sender, To, subject, main)
+    
+    server.login('mailbotalex7@gmail.com', 'neverknowmypwd')
+    server.sendmail(sender, To, body)
+    server.close()
+
+def send_statue_mail(loads):
+    To = ['mailbotalex7@gmail.com']
+    
+    subject = 'ALL STATUE UPDATE'
+    main = ''
+    for lec in loads:
+        main += 'Class {} [{}]  Last_statue: {} Now_statue: {} Last_update: {}\n'.format(lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+
+    body = "From: {}\r\nTo: {}\r\nSubject: {}\r\n\n{}".format(sender, To, subject, main)
+    
+    server.login('mailbotalex7@gmail.com', 'neverknowmypwd')
+    server.sendmail(sender, To, body)
+    server.close()
+
+
+
+    
 if __name__ == '__main__':
     main_loop()
     

@@ -1,9 +1,9 @@
-20052 MINNIS01
-20060 MINNIS02
-36450 ICS31_Harisen
-36595 ICS33LEC2
-44300 Math3A_Joe
-44233 2DLec_Scott
-44235 2dDis_Scott
-44235 Leehom
-36450 Leehom
+20052 Alex qsha@uci.edu
+20060 Alex qsha@uci.edu
+36450 Harisen qsha@uci.edu
+36595 Alex qsha@uci.edu
+44300 Joe jiahaox3@uci.edu
+44233 Scott shihaom@uci.edu
+44235 Scott shihaom@uci.edu
+44235 Leehom qsha@uci.edu
+36450 Leehom qsha@uci.edu
