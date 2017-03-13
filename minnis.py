@@ -17,7 +17,7 @@ post_2 = '&InstrName=&CourseTitle=&ClassType=ALL&Units=&Days=&StartTime=&EndTime
 
 
 Check_gap = 40  # Unit = s
-Report_gap = 40  # Unit = check_gaps
+Report_gap = 80  # Unit = check_gaps
 
 
 class Lec:
