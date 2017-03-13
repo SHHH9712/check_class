@@ -1,7 +1,8 @@
 import requests
 import json
-import time
 import smtplib
+import time
+from datetime import datetime
 from bs4 import BeautifulSoup
 from pushover import init, Client
 from collections import namedtuple
@@ -15,6 +16,10 @@ post_1 = 'Submit=Display+Web+Results&YearTerm=2017-14&ShowComments=on&ShowFinals
 post_2 = '&InstrName=&CourseTitle=&ClassType=ALL&Units=&Days=&StartTime=&EndTime=&MaxCap=&FullCourses=ANY&FontSize=100&CancelledCourses=Exclude&Bldg=&Room='
 
 
+Check_gap = 40  # Unit = s
+Report_gap = 40  # Unit = check_gaps
+
+
 class Lec:
     def __init__(self, code, user_name, mail):      
         self._user_name = user_name
@@ -24,7 +29,7 @@ class Lec:
         nns = self.get_info()
         
         self._name = nns[0]
-        self._time = 'time'
+        self._time = datetime.now().strftime('%H:%M:%S')
         self._last_statue = nns[1]
         self._now_statue = nns[1]
 
@@ -34,6 +39,14 @@ class Lec:
         # print(r.text)
         soup = BeautifulSoup(r.text, 'html.parser')
         list_class = soup.find_all(attrs = {'nowrap':"nowrap"})
+        '''
+        time = 0
+        for i in list_class:
+            for m in i.strings:
+                print('{}: {}'.format(time, m))
+                time+=1
+        print(list_class[11].string)
+        '''
         names = []
         for i in list_class[0].strings:
             names.append(i)
@@ -42,20 +55,19 @@ class Lec:
 
     def open_notify(self):
         init('afiq2ntpokxubmzt61j9ii5kf2w4o9')
-        Client('uuij88hm2xkrk17brz1enbiuyko6ph').send_message('NOW {}'.format(self._now_statue), title = '{} {}'.format(self._pre_name, self._code))
+        Client('uuij88hm2xkrk17brz1enbiuyko6ph').send_message('NOW {}'.format(self._now_statue), title = '{} {}'.format(self._name, self._code))
 
     def update(self):
         update_data = self.get_info()
         self._last_statue = self._now_statue
         self._now_statue = update_data[1]
-        
-        # self._time = new_time
+        self._date = datetime.now().strftime('%H:%M:%S')
         
         if self._last_statue != self._now_statue:
             self.open_notify()
             postman(self)
             # print('push: {}'.format(self._code))
-        print('class: {}, statue is :{}'.format(self._code, self._now_statue))
+        print('{:13} [{}] | {:10} | {:5} => {:5} | {}'.format(self._name, self._code, self._user_name, self._last_statue, self._now_statue, self._time))
         #postman(self)
 
     def push_statue(self):
@@ -68,10 +80,73 @@ def read_files():
     codes = []
     r = open('classes.txt')
     for i in r.readlines():
-        codes.append([i.split()[0], i.split()[1], i.split()[2]])
+        if i != '':
+            codes.append([i.split()[0], i.split()[1], i.split()[2]])
     r.close()
     return codes
     
+
+def postman(lec):
+    To = [lec._mail, 'shhh9712@gmail.com']
+    
+    subject = 'Your class {} [{}] statue has changed!'.format(lec._name, lec._code)
+    main = 'Hi {}!\n Your class: {} [{}] statue has changed statue \n     |--FROM: {} \n     TO:   |--{} \n     |--AT:   {}\n\nFrom MailbotAlex :)'.format(lec._user_name, lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
+
+    # print(subject)
+    # print(main)
+
+    body = "From: {}\r\nTo: {}\r\nSubject: {}\r\n\n{}".format(sender, To, subject, main)
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.login('mailbotalex7@gmail.com', 'neverknowmypwd')
+        server.sendmail(sender, To, body)
+        server.close()
+        print('sent success!')
+    except:
+        print('SENT FAIL!')
+
+def send_statue_mail(loads):
+    print('sending statue_mail.....')
+    
+    To = ['mailbotalex7@gmail.com']
+    
+    subject = 'ALL STATUE UPDATE'
+    main = ''
+    for lec in loads:
+        main += '{} [{}]\n    |--Statue: {} => {} \n    |--Last_update: {}\n'.format(lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
+    
+    body = "From: {}\r\nTo: {}\r\nSubject: {}\r\n\n{}".format(sender, To, subject, main)
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.login('mailbotalex7@gmail.com', 'neverknowmypwd')
+        server.sendmail(sender, To, body)
+        server.close()
+        print('sent success!')
+    except:
+        print('SENT FAIL!')
+ 
+def send_statue_noti(loads):
+    OPEN = 0
+    FULL = 0
+    WAIT = 0
+    for load in loads:
+        if load._now_statue == 'OPEN':
+            OPEN += 1
+        if load._now_statue == 'FULL':
+            FULL += 1
+        if load._now_statue == 'Waitl':
+            WAIT += 1
+    print(OPEN, FULL, WAIT)
+    init('afiq2ntpokxubmzt61j9ii5kf2w4o9')
+    Client('uuij88hm2xkrk17brz1enbiuyko6ph').send_message('Open:{} Full:{} Wait:{}'.format(OPEN, FULL, WAIT) ,title = 'RUNNING!')
+
+def timestamp():
+    pass
 
 def main_loop():
     REPORT_TIME = 0
@@ -81,67 +156,34 @@ def main_loop():
         for content in contents:
             loads.append(Lec(content[0], content[1], content[2]))
 
+        print('Update {} ------------------------'.format(REPORT_TIME))
         for load in loads:
-            load.update()
-
-        if REPORT_TIME == 20:
+            try:
+                load.update()
+            except:
+                pass
+        print('')
+        
+        if REPORT_TIME == Report_gap:
             send_statue_mail(loads)
-            for load in loads:
-                load.push_statue()
+            send_statue_noti(loads)
             REPORT_TIME = 0
                 
         REPORT_TIME += 1
-        time.sleep(60)
+        time.sleep(Check_gap)
 
 
-def postman(lec):
-    
-    To = [lec._mail, 'shhh9712@gmail.com']
-    
-    subject = 'Your class {} [{}] statue has changed!'.format(lec._name, lec._code)
-    main = 'Class {} [{}] statue has changed statue \nFROM: {} \nTO: {} \nAT: {}'.format(lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
-
-    # print(subject)
-    # print(main)
-    
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-
-    
-
-    body = "From: {}\r\nTo: {}\r\nSubject: {}\r\n\n{}".format(sender, To, subject, main)
-    
-    server.login('mailbotalex7@gmail.com', 'neverknowmypwd')
-    server.sendmail(sender, To, body)
-    server.close()
-
-def send_statue_mail(loads):
-    To = ['mailbotalex7@gmail.com']
-    
-    subject = 'ALL STATUE UPDATE'
-    main = ''
-    for lec in loads:
-        main += 'Class {} [{}]  Last_statue: {} Now_statue: {} Last_update: {}\n'.format(lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
-
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-
-    body = "From: {}\r\nTo: {}\r\nSubject: {}\r\n\n{}".format(sender, To, subject, main)
-    
-    server.login('mailbotalex7@gmail.com', 'neverknowmypwd')
-    server.sendmail(sender, To, body)
-    server.close()
-
-
-
-    
 if __name__ == '__main__':
     main_loop()
     
 
 '''
+
+     
+def notify_running(OPEN, FULL, WAIT):
+    init('afiq2ntpokxubmzt61j9ii5kf2w4o9')
+    Client('uuij88hm2xkrk17brz1enbiuyko6ph').send_message(''.format(OPEN, FULL, WAIT) ,title = 'Server still running!')
+
 def open_notify(pre_name, code, statue):
     init('afiq2ntpokxubmzt61j9ii5kf2w4o9')
     Client('uuij88hm2xkrk17brz1enbiuyko6ph').send_message('NOW {}'.format(statue), title = '{} {}'.format(pre_name, code))
