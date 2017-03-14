@@ -17,7 +17,7 @@ post_2 = '&InstrName=&CourseTitle=&ClassType=ALL&Units=&Days=&StartTime=&EndTime
 
 
 Check_gap = 40  # Unit = s
-Report_gap = 80  # Unit = check_gaps
+Report_gap = 78  # Unit = check_gaps
 
 
 class Lec:
@@ -157,7 +157,10 @@ def main_loop():
         contents = read_files()
         loads = []
         for content in contents:
-            loads.append(Lec(content[0], content[1], content[2]))
+            try:
+                loads.append(Lec(content[0], content[1], content[2]))
+            except:
+                pass
 
         print('Update {} ------------------------'.format(REPORT_TIME))
         for load in loads:
