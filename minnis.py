@@ -16,8 +16,8 @@ post_1 = 'Submit=Display+Web+Results&YearTerm=2017-14&ShowComments=on&ShowFinals
 post_2 = '&InstrName=&CourseTitle=&ClassType=ALL&Units=&Days=&StartTime=&EndTime=&MaxCap=&FullCourses=ANY&FontSize=100&CancelledCourses=Exclude&Bldg=&Room='
 
 
-Check_gap = 40  # Unit = s
-Report_gap = 78  # Unit = check_gaps
+Check_gap = 1  # Unit = s
+Report_gap = 300  # Unit = check_gaps
 
 
 class Lec:
@@ -25,11 +25,11 @@ class Lec:
         self._user_name = user_name
         self._mail = mail
         self._code = code
+        self._time = timestamp()
         
         nns = self.get_info()
         
         self._name = nns[0]
-        self._time = datetime.now().strftime('%H:%M:%S')
         self._last_statue = nns[1]
         self._now_statue = nns[1]
 
@@ -65,18 +65,22 @@ class Lec:
         update_data = self.get_info()
         self._last_statue = self._now_statue
         self._now_statue = update_data[1]
-        self._date = datetime.now().strftime('%H:%M:%S')
-        if str(self._last_statue) != str(self._now_statue):
-            self.open_notify()
-            postman(self)
-            # print('push: {}'.format(self._code))
+        self._date = timestamp()
         print('{:13} [{}] | {:10} | {:5} => {:5} | {}'.format(self._name, self._code, self._user_name, self._last_statue, self._now_statue, self._time))
         #postman(self)
 
     def push_statue(self):
         self.open_notify()
-        
+
         # print('regular push: {}'.format(self._code))
+
+    def check_statue(self):
+        if str(self._last_statue) != str(self._now_statue):
+            self.open_notify()
+            postman(self)
+            return True
+        return False
+            # print('push: {}'.format(self._code))
         
 
 def read_files():
@@ -149,7 +153,19 @@ def send_statue_noti(loads):
     Client('uuij88hm2xkrk17brz1enbiuyko6ph').send_message('Open:{} Full:{} Wait:{}'.format(OPEN, FULL, WAIT) ,title = 'RUNNING!')
 
 def timestamp():
-    pass
+    now = datetime.now()
+    time = now.strftime('%H:%M:%S')
+    time1 = time.split(':')
+    new_time = [str(int(time1[0])-7), time1[1], time1[2]]
+    return (':'.join(new_time))
+    
+
+def report_error(code, typ):
+    init('afiq2ntpokxubmzt61j9ii5kf2w4o9')
+    Client('uuij88hm2xkrk17brz1enbiuyko6ph').send_message('code: {} | type: {}'.format(code, typ),title = 'Error Occure!')
+
+    
+    
 
 def main_loop():
     REPORT_TIME = 0
@@ -163,12 +179,18 @@ def main_loop():
             except:
                 pass
 
-        print('Update {} ------------------------'.format(REPORT_TIME))
+        print('Update {} ------------------------'.format(Report_gap - REPORT_TIME))
+        
         for load in loads:
             try:
                 load.update()
             except:
-                pass
+                report_error(load._code, 'Update_Error')
+                send_statue_mail(loads)
+                
+        for load in loads:
+            load.check_statue()
+            
         print('')
         
         if REPORT_TIME == 0:
