@@ -89,7 +89,7 @@ def postman(lec):
     To = [lec._mail, 'shhh9712@gmail.com']
     
     subject = 'Your class {} [{}] statue has changed!'.format(lec._name, lec._code)
-    main = 'Hi {}!\n Your class: {} [{}] statue has changed statue \n     |--FROM: {} \n     TO:   |--{} \n     |--AT:   {}\n\nFrom MailbotAlex :)'.format(lec._user_name, lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
+    main = 'Hi {}!\n Your class: {} [{}] statue has changed statue \n     |--FROM: {} \n     |--TO: {} \n     |--AT:   {}\n\nFrom MailbotAlex :)'.format(lec._user_name, lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
 
     # print(subject)
     # print(main)
