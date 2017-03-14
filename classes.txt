@@ -1,5 +1,5 @@
-20052 Alex qsha@uci.edu
-20060 Alex qsha@uci.edu
+20052 Vincent a5052408@gmail.com
+20060 Vincent a5052408@gmail.com
 36595 Alex qsha@uci.edu
 36450 Harisen mingshul@uci.edu
 44380 Harisen mingshul@uci.edu
@@ -8,6 +8,9 @@
 44235 Scott shihaom@uci.edu
 44235 LeehomChen lihengc@uci.edu
 36450 LeehomChen lihengc@uci.edu
+44190 Eason yunfez2@uci.edu
+44195 Eason yunfez2@uci.edu
+44198 Eason yunfez2@uci.edu
 33252 Iris yuyanz5@uci.edu
 33254 Iris yuyanz5@uci.edu
 33206 Iris yuyanz5@uci.edu
