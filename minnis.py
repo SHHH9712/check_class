@@ -163,11 +163,12 @@ def main_loop():
                 pass
         print('')
         
-        if REPORT_TIME == Report_gap:
-            REPORT_TIME = 0
         if REPORT_TIME ==0:
             send_statue_mail(loads)
             send_statue_noti(loads)
+        
+        if REPORT_TIME == Report_gap:
+            REPORT_TIME = 0
                 
         REPORT_TIME += 1
         time.sleep(Check_gap)
