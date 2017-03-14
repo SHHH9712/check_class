@@ -16,8 +16,8 @@ post_1 = 'Submit=Display+Web+Results&YearTerm=2017-14&ShowComments=on&ShowFinals
 post_2 = '&InstrName=&CourseTitle=&ClassType=ALL&Units=&Days=&StartTime=&EndTime=&MaxCap=&FullCourses=ANY&FontSize=100&CancelledCourses=Exclude&Bldg=&Room='
 
 
-Check_gap = 1  # Unit = s
-Report_gap = 20  # Unit = check_gaps
+Check_gap = 40  # Unit = s
+Report_gap = 78  # Unit = check_gaps
 
 
 class Lec:
@@ -70,7 +70,7 @@ class Lec:
             self.open_notify()
             postman(self)
             # print('push: {}'.format(self._code))
-        #print('{:13} [{}] | {:10} | {:5} => {:5} | {}'.format(self._name, self._code, self._user_name, self._last_statue, self._now_statue, self._time))
+        print('{:13} [{}] | {:10} | {:5} => {:5} | {}'.format(self._name, self._code, self._user_name, self._last_statue, self._now_statue, self._time))
         #postman(self)
 
     def push_statue(self):
@@ -163,22 +163,20 @@ def main_loop():
             except:
                 pass
 
-        #print('Update {} ------------------------'.format(REPORT_TIME))
+        print('Update {} ------------------------'.format(REPORT_TIME))
         for load in loads:
             try:
                 load.update()
             except:
                 pass
-        #print('')
+        print('')
         
-        if REPORT_TIME ==0:
+        if REPORT_TIME == 0:
             send_statue_mail(loads)
             send_statue_noti(loads)
-        
-        if REPORT_TIME == Report_gap:
-            REPORT_TIME = 0
-                
-        REPORT_TIME += 1
+            REPORT_TIME = Report_gap
+
+        REPORT_TIME -= 1
         time.sleep(Check_gap)
 
 
