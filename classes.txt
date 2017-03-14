@@ -30,8 +30,6 @@
 33065 Adam zhaofend@uci.edu
 33066 Adam zhaofend@uci.edu
 33067 Adam zhaofend@uci.edu
-33068 Adam zhaofend@uci.edu
-33069 Adam zhaofend@uci.edu
 33070 Adam zhaofend@uci.edu
 33071 Adam zhaofend@uci.edu
 33072 Adam zhaofend@uci.edu
@@ -49,6 +47,4 @@
 33084 Adam zhaofend@uci.edu
 33085 Adam zhaofend@uci.edu
 33086 Adam zhaofend@uci.edu
-33087 Adam zhaofend@uci.edu
-33088 Adam zhaofend@uci.edu
 33089 Adam zhaofend@uci.edu

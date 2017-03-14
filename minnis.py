@@ -46,6 +46,10 @@ class Lec:
                 print('{}: {}'.format(time, m))
                 time+=1
         print(list_class[11].string)
+        
+        print('-------')
+        print(self._code)
+        print(list_class[0], )
         '''
         names = []
         for i in list_class[0].strings:
