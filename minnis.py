@@ -136,6 +136,29 @@ def send_statue_mail(loads):
         print('sent success!')
     except:
         print('SENT FAIL!')
+
+def send_statue_mail_regular(loads):
+    print('sending statue_mail.....')
+    
+    To = ['botalexsql@gmail.com']
+    
+    subject = 'ALL STATUE UPDATE'
+    main = ''
+    for lec in loads:
+        main += '{} [{}]\n    |--Statue: {} => {} \n    |--Last_update: {}\n'.format(lec._name, lec._code, lec._last_statue, lec._now_statue, lec._time)
+    
+    body = "From: {}\r\nTo: {}\r\nSubject: {}\r\n\n{}".format(sender, To, subject, main)
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.login('mailbotalex7@gmail.com', 'neverknowmypwd')
+        server.sendmail(sender, To, body)
+        server.close()
+        print('sent success!')
+    except:
+        print('SENT FAIL!')
+
  
 def send_statue_noti(loads):
     OPEN = 0
@@ -187,9 +210,13 @@ def main_loop():
             except:
                 report_error(load._code, 'Update_Error')
                 send_statue_mail(loads)
+        
+        #send_statue_mail_regular(loads)
                 
         for load in loads:
-            load.check_statue()
+            if load.check_statue():
+                send_statue_mail(loads)
+                
             
         print('')
         
