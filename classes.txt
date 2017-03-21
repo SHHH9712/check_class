@@ -9,6 +9,9 @@
 44300 Joe jiahaox3@uci.edu
 44233 Scott shihaom@uci.edu
 44235 Scott shihaom@uci.edu
+33074 Scott shihaom@uci.edu
+33082 Scott shihaom@uci.edu
+33083 Scott shihaom@uci.edu
 44235 LeehomChen lihengc@uci.edu
 36450 LeehomChen lihengc@uci.edu
 44190 Eason yunfez2@uci.edu
