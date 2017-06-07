@@ -77,14 +77,15 @@ def send_notify(code, name, puid, statue):
     ensure_one(bot.friends().search(puid = puid)).send('{}: {}  状态变更为{}'.format(name, code, statue))
     
 def send_msg(puid, msg):
-    bot.friends().search(puid = puid).send(msg)
+    ensure_one(bot.friends().search(puid = puid)).send(msg)
     
 def add_Lec(code, puid):
 #     Loads.append(Lec(code, puid))
     outfile = open('classes.txt', 'a')
     outfile.write(code +' NULL '+ puid +' NULL\n')
     outfile.close()
-    shhh = bot.friends().search('SHHH')[1].puid
-    send_msg(shhh, 'add {} for {}'.format(code, puid))
+    chat = bot.friends().search('shhh')
+    for i in chat:
+        send_msg(i.puid, 'add {} for {}'.format(code, puid))
     
 # embed()
