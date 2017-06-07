@@ -20,7 +20,7 @@ def auto_accept_friends(msg):
     # 接受好友请求
     new_friend = msg.card.accept()
     # 向新的好友发送消息
-    new_friend.send('格式： add+课号（add 888888）.\n回复：课表 查看当前课程状态。')
+    new_friend.send('把你想监控的课code注册在这里，在OPEN之后会自动通知你\n格式： add+课号（add 888888）.\n回复：课表 查看当前课程状态。')
     
 @bot.register(Friend, TEXT)
 def reply_text(msg): #add 20099
