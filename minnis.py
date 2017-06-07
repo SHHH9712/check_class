@@ -46,7 +46,7 @@ class Lec:
         else:
             self.statue = statue
 
-        self.notify()
+        #self.notify()
             
             
     def pull_statue(self):
