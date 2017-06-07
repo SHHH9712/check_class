@@ -24,13 +24,13 @@ def auto_accept_friends(msg):
     
 @bot.register(Friend, TEXT)
 def reply_text(msg): #add 20099
-    n_msg = msg.text.split()
+    n_msg = msg.text.split('+')
     if msg.text == "课表":
         reply = file2reply(msg.sender.puid)
         for mail in reply:
             msg.sender.send(mail)
     elif msg.text == "格式":
-        msg.sender.send('格式： add+课号\n（add 888888）.\n回复-课表，查看监控列表')
+        msg.sender.send('格式: add+课号\n(add+888888).\n回复-课表，查看监控列表')
     elif msg.text == 'mmma':
         classes_content = reply_statue()
         for i in classes_content:
