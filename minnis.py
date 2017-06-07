@@ -8,6 +8,8 @@ from pushover import init, Client
 from collections import namedtuple
 import weixin
 
+class LecError: pass
+
 url = 'https://www.reg.uci.edu/perl/WebSoc'
 head = {'Content-Type':'application/x-www-form-urlencoded'}
 post_1 = 'Submit=Display+Web+Results&YearTerm=2017-92&ShowComments=on&ShowFinals=on&Breadth=ANY&Dept=+ALL&CourseNum=&Division=ANY&CourseCodes='
@@ -21,7 +23,10 @@ def file2list():
     infile = open('classes.txt', 'r')
     for line in infile.readlines():
         if line != '':
-            result.append(Lec(line.split()[0], line.split()[1], line.split()[2], line.split()[3]))
+            try:
+                result.append(Lec(line.split()[0], line.split()[1], line.split()[2], line.split()[3]))
+            except:
+                pass
     infile.close()
     return result
 
@@ -40,12 +45,17 @@ class Lec:
         if c_name == 'NULL':
             self.course_name = comb[0]
         else:
-            self.course_name = c_name
-        
+            try:
+                self.course_name = c_name
+            except:
+                pass        
         if statue == 'NULL':
             self.statue = comb[1]
         else:
-            self.statue = statue
+            try:
+                self.statue = statue
+            except:
+                pass
 
         #self.notify()
             
