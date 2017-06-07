@@ -39,7 +39,7 @@ def reply_text(msg): #add 20099
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
-        msg.sender.send('吧{}加入到{}的列表中.'.format(code, puid))
+        return '吧{}加入到{}的列表中.'.format(code, puid)
     
 def file2reply(puid):
     result = []
