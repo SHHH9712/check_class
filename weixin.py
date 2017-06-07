@@ -44,7 +44,7 @@ def reply_text(msg): #add 20099
         clean()
         return 'Success'
     else:
-        msg.sender.send('回复：格式，查看格式.\n回复：课表，查看监控列表')
+        msg.sender.send('把你想监控的课code注册在这里，在OPEN之后会自动通知你\n回复：格式，查看格式.\n回复：课表，查看监控列表')
 
     
 def file2reply(puid):
