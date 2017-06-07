@@ -30,19 +30,19 @@ def reply_text(msg): #add 20099
         for mail in reply:
             msg.sender.send(mail)
     if msg.text == "格式":
-        return '格式： add+课号（add 888888）.'
+        msg.sender.send(mail'格式： add+课号（add 888888）.')
     if msg.text == 'mmma':
 #         puids = save_puid()
         classes_content = reply_statue()
 #         for i in puids:
 #             bot.self.send(str(i))
         for i in classes_content:
-            bot.self.send(i)
+            msg.sender.send(i)
     if n_msg[0].upper() == 'ADD':
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
-        return '吧{}加入到{}的列表中.'.format(code, puid)
+        msg.sender.send('吧{}加入到{}的列表中.'.format(code, puid))
     
 def file2reply(puid):
     result = []
