@@ -39,9 +39,9 @@ def reply_text(msg): #add 20099
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
-        msg.sender.send('吧{}加入到{}的列表中.'.format(code, puid))
+        return 'Success'
     else:
-        msg.sender.send('格式： add+课号\n（add 888888）.\n回复-课表，查看监控列表')
+        msg.sender.send('回复-格式，查看格式.\n回复-课表，查看监控列表')
 
     
 def file2reply(puid):
