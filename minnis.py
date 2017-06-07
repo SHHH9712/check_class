@@ -45,6 +45,8 @@ class Lec:
             self.statue = comb[1]
         else:
             self.statue = statue
+
+        self.notify()
             
             
     def pull_statue(self):
