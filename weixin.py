@@ -29,16 +29,13 @@ def reply_text(msg): #add 20099
         reply = file2reply(msg.sender.puid)
         for mail in reply:
             msg.sender.send(mail)
-    if msg.text == "格式":
+    elif msg.text == "格式":
         msg.sender.send('格式： add+课号（add 888888）.')
-    if msg.text == 'mmma':
-#         puids = save_puid()
+    elif msg.text == 'mmma':
         classes_content = reply_statue()
-#         for i in puids:
-#             bot.self.send(str(i))
         for i in classes_content:
             msg.sender.send(i)
-    if n_msg[0].upper() == 'ADD':
+    elif n_msg[0].upper() == 'ADD':
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
