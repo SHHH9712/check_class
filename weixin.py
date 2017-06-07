@@ -3,8 +3,7 @@ from wxpy import *
 
 bot = Bot(cache_path = True, console_qr=-2)
 bot.enable_puid()
-f1 = ensure_one(bot.friends().search('BotSHHH'))
-f1.send('new_session')
+bot.self.send('new_session')
 
 # 
 # puids = dict()
