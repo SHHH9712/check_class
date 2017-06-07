@@ -40,6 +40,9 @@ def reply_text(msg): #add 20099
         puid = msg.sender.puid
         add_Lec(code, puid)
         return 'Success!\n回复-课表，查看监控列表'
+    elif msg.text =='cleanall':
+        clean()
+        return 'Success'
     else:
         msg.sender.send('回复-格式，查看格式.\n回复-课表，查看监控列表')
 
@@ -84,6 +87,12 @@ def add_Lec(code, puid):
     outfile = open('classes.txt', 'a')
     outfile.write(code +' NULL '+ puid +' NULL\n')
     outfile.close()
+
+def clean():
+    file = open('classes.txt', 'w')
+    file.write('\n')
+    file.close()
+    
 #    chat = bot.friends().search('shhh')
 #    for i in chat:
 #        send_msg(i.puid, 'add {} for {}'.format(code, puid))
