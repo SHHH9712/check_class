@@ -20,7 +20,8 @@ def file2list():
     result = []
     infile = open('classes.txt', 'r')
     for line in infile.readlines():
-        result.append(Lec(line.split()[0], line.split()[1], line.split()[2], line.split()[3]))
+        if line != '':
+            result.append(Lec(line.split()[0], line.split()[1], line.split()[2], line.split()[3]))
     infile.close()
     return result
 
