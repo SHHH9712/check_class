@@ -1,31 +1,3 @@
-44233 Alex qsha@uci.edu
-44234 Alex qsha@uci.edu
-44235 Alex qsha@uci.edu
-36595 Alex qsha@uci.edu
-20052 Vincent a5052408@gmail.com
-20060 Vincent a5052408@gmail.com
-36450 Harisen mingshul@uci.edu
-44380 Harisen mingshul@uci.edu
-44300 Joe jiahaox3@uci.edu
-44233 Scott shihaom@uci.edu
-44235 Scott shihaom@uci.edu
-44235 LeehomChen lihengc@uci.edu
-36450 LeehomChen lihengc@uci.edu
-44190 Eason yunfez2@uci.edu
-44195 Eason yunfez2@uci.edu
-44198 Eason yunfez2@uci.edu
-33252 Iris yuyanz5@uci.edu
-33254 Iris yuyanz5@uci.edu
-33206 Iris yuyanz5@uci.edu
-33208 Iris yuyanz5@uci.edu
-33213 Iris yuyanz5@uci.edu
-33220 Iris yuyanz5@uci.edu
-33221 Iris yuyanz5@uci.edu
-33245 Iris yuyanz5@uci.edu
-33225 Iris yuyanz5@uci.edu
-33226 Iris yuyanz5@uci.edu
-33231 Iris yuyanz5@uci.edu
-33233 Iris yuyanz5@uci.edu
-33232 Iris yuyanz5@uci.edu
-33234 Iris yuyanz5@uci.edu
-33244 Iris yuyanz5@uci.edu
+97053 Anesth605A 5cb7919d OPEN
+20099 AcEng20C 5cb7919d FULL
+97053 Anesth605A 5cb7919d OPEN
