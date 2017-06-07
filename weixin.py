@@ -30,7 +30,7 @@ def reply_text(msg): #add 20099
         for mail in reply:
             msg.sender.send(mail)
     if msg.text == "格式":
-        msg.sender.send(mail'格式： add+课号（add 888888）.')
+        msg.sender.send('格式： add+课号（add 888888）.')
     if msg.text == 'mmma':
 #         puids = save_puid()
         classes_content = reply_statue()
