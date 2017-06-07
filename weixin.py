@@ -90,7 +90,7 @@ def add_Lec(code, puid):
 
 def clean():
     file = open('classes.txt', 'w')
-    file.write('\n')
+    file.write('')
     file.close()
     
 #    chat = bot.friends().search('shhh')
