@@ -39,7 +39,7 @@ def reply_text(msg): #add 20099
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
-        return 'Success'
+        return 'Success!\n回复-课表，查看监控列表'
     else:
         msg.sender.send('回复-格式，查看格式.\n回复-课表，查看监控列表')
 
@@ -73,17 +73,18 @@ def reply_statue():
     return result
     
 def send_notify(code, name, puid, statue):
-    print('push notification' + puid)
+    print('push notification to: ' + puid)
     ensure_one(bot.friends().search(puid = puid)).send('{}: {}  状态变更为{}'.format(name, code, statue))
     
 def send_msg(puid, msg):
-    ensure_one(bot.friends().search(puid = puid)).send(msg)
+    bot.friends().search(puid = puid).send(msg)
     
 def add_Lec(code, puid):
 #     Loads.append(Lec(code, puid))
     outfile = open('classes.txt', 'a')
     outfile.write(code +' NULL '+ puid +' NULL\n')
     outfile.close()
-    send_msg(bot.self.puid, 'add {} for {}'.format(code, puid))
+    shhh = bot.friends().search('SHHH')[1].puid
+    send_msg(shhh, 'add {} for {}'.format(code, puid))
     
 # embed()
