@@ -20,7 +20,7 @@ def auto_accept_friends(msg):
     # 接受好友请求
     new_friend = msg.card.accept()
     # 向新的好友发送消息
-    new_friend.send('格式： add+课号（add 888888）.\n回复-课表 查看当前课程状态。')
+    new_friend.send('格式： add+课号（add 888888）.\n回复：课表 查看当前课程状态。')
     
 @bot.register(Friend, TEXT)
 def reply_text(msg): #add 20099
@@ -30,7 +30,7 @@ def reply_text(msg): #add 20099
         for mail in reply:
             msg.sender.send(mail)
     elif msg.text == "格式":
-        msg.sender.send('格式: add+课号\n(add+888888).\n回复-课表，查看监控列表')
+        msg.sender.send('格式: add+课号\n(add加号888888).\n回复：课表，查看监控列表')
     elif msg.text == 'mmma':
         classes_content = reply_statue()
         for i in classes_content:
@@ -39,12 +39,12 @@ def reply_text(msg): #add 20099
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
-        return 'Success!\n回复-课表，查看监控列表'
+        return 'Success!\n课程状态改变后会给你发微信\n回复：课表，查看监控列表'
     elif msg.text =='cleanall':
         clean()
         return 'Success'
     else:
-        msg.sender.send('回复-格式，查看格式.\n回复-课表，查看监控列表')
+        msg.sender.send('回复：格式，查看格式.\n回复：课表，查看监控列表')
 
     
 def file2reply(puid):
