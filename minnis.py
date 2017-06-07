@@ -27,7 +27,7 @@ def file2list():
 def load2file(loads):
     outfile = open('classes.txt', 'w')
     for i in loads:
-        outfile.write(f"{i.code} {i.course_name} {i.puid} {i.statue}\n")
+        outfile.write("{} {} {} {}\n".format(i.code, i.course_name, i.puid, i.statue))
     outfile.close()
 
 class Lec:
