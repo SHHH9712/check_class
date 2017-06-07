@@ -26,7 +26,7 @@ def file2list():
             try:
                 result.append(Lec(line.split()[0], line.split()[1], line.split()[2], line.split()[3]))
             except:
-                pass
+                weixin.send_msg(line.split()[2], '{}这是节假课'.format(line.split()[0]))
     infile.close()
     return result
 
