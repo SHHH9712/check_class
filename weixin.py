@@ -84,8 +84,8 @@ def add_Lec(code, puid):
     outfile = open('classes.txt', 'a')
     outfile.write(code +' NULL '+ puid +' NULL\n')
     outfile.close()
-    chat = bot.friends().search('shhh')
-    for i in chat:
-        send_msg(i.puid, 'add {} for {}'.format(code, puid))
+#    chat = bot.friends().search('shhh')
+#    for i in chat:
+#        send_msg(i.puid, 'add {} for {}'.format(code, puid))
     
 # embed()
