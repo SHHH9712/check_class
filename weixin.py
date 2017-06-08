@@ -20,7 +20,7 @@ def auto_accept_friends(msg):
     # 接受好友请求
     new_friend = msg.card.accept()
     # 向新的好友发送消息
-    new_friend.send('把你想监控的课code注册在这里，在OPEN之后会自动通知你\n格式： add+课号（add 888888）.\n回复：课表 查看当前课程状态。')
+    new_friend.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想看自己注册了哪些课，回复：课表')
     
 @bot.register(Friend, TEXT)
 def reply_text(msg): #add 20099
@@ -30,7 +30,7 @@ def reply_text(msg): #add 20099
         for mail in reply:
             msg.sender.send(mail)
     elif msg.text == "格式":
-        msg.sender.send('格式: add+课号\n(add加号888888).\n回复：课表，查看监控列表')
+        msg.sender.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想看自己注册了哪些课，回复：课表')
     elif msg.text == 'mmma':
         classes_content = reply_statue()
         for i in classes_content:
@@ -39,12 +39,12 @@ def reply_text(msg): #add 20099
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
-        return 'Success!\n课程状态改变后会给你发微信\n回复：课表，查看监控列表'
+        return 'Success!\n课程状态改变后会给你发微信\n如果想看自己注册了哪些课，回复：课表'
     elif msg.text =='cleanall':
         clean()
         return 'Success'
     else:
-        msg.sender.send('把你想监控的课code注册在这里，在OPEN之后会自动通知你\n回复：格式，查看格式.\n回复：课表，查看监控列表')
+        msg.sender.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想看自己注册了哪些课，回复：课表')
 
     
 def file2reply(puid):
@@ -77,7 +77,7 @@ def reply_statue():
     
 def send_notify(code, name, puid, statue):
     print('push notification to: ' + puid)
-    ensure_one(bot.friends().search(puid = puid)).send('{}: {}  状态变更为{}'.format(name, code, statue))
+    bot.friends().search(puid = puid).send('{}: {}  状态变更为{}'.format(name, code, statue))
     
 def send_msg(puid, msg):
     ensure_one(bot.friends().search(puid = puid)).send(msg)

@@ -26,6 +26,7 @@ def file2list():
             try:
                 result.append(Lec(line.split()[0], line.split()[1], line.split()[2], line.split()[3]))
             except:
+                print('improt error')
                 weixin.send_msg(line.split()[2], '{}这是节假课'.format(line.split()[0]))
     infile.close()
     return result
@@ -56,6 +57,7 @@ class Lec:
                 self.statue = statue
             except:
                 pass
+        print(self.code, self.course_name, self.puid, self.statue)
 
         #self.notify()
             
@@ -80,7 +82,7 @@ class Lec:
 #         new_statue = file.read()
 #         file.close()
         
-        print(self.statue, new_statue) #test statue check
+        print(self.code, self.course_name, self.statue, new_statue, self.puid) #test statue check
         
         if new_statue != self.statue:
             self.statue = new_statue
