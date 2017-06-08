@@ -57,7 +57,7 @@ class Lec:
                 self.statue = statue
             except:
                 pass
-        print(self.code, self.course_name, self.puid, self.statue)
+        #print(self.code, self.course_name, self.puid, self.statue)
 
         #self.notify()
             
@@ -82,7 +82,7 @@ class Lec:
 #         new_statue = file.read()
 #         file.close()
         
-        print(self.code, self.course_name, self.statue, new_statue, self.puid) #test statue check
+        #print(self.code, self.course_name, self.statue, new_statue, self.puid) #test statue check
         
         if new_statue != self.statue:
             self.statue = new_statue
