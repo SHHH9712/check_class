@@ -39,7 +39,7 @@ def reply_text(msg): #add 20099
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
-        return 'Success!\n课程状态改变后会给你发微信\n如果想看自己注册了哪些课，回复：课表'
+        return 'Success!注册可能需要几秒钟\n课程状态改变后会给你发微信\n如果想看自己注册了哪些课，回复：课表'
     elif msg.text =='cleanall':
         clean('classes.txt')
         return 'Success'
