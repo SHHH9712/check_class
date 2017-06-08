@@ -40,6 +40,13 @@ def reply_text(msg): #add 20099
         puid = msg.sender.puid
         add_Lec(code, puid)
         return 'Success!注册可能需要几秒钟\n课程状态改变后会给你发微信\n如果想看自己注册了哪些课，回复：课表'
+    elif n_msg[0].upper() == 'DEL':
+        code = n_msg[1]
+        puid = msg.sender.puid
+        outfile = open('del.txt', 'a')
+        outfile.write(code + ' ' + puid + '\n')
+        outfile.close()
+        return 'Success!删除可能需要几秒钟\n如果想看自己注册了哪些课，回复：课表'
     elif msg.text =='cleanall':
         clean('classes.txt')
         return 'Success'

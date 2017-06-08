@@ -112,6 +112,22 @@ def del_dulicate(load):
             result.append(i)
     return result
     
+def del_lec(load, f):
+    minus = []
+    file = open(f, 'r')
+    for i in file.readlines():
+        minus.append(i.spilt())
+    file.close()
+    clean(f)
+    result = []
+    for i in load:
+        switch = True
+        for i2 in minus:
+            if i.puid == i2[1] and i.code == i2[0]:
+                switch = False
+        if switch == True:
+            result.append(i)
+    return result
         
 def mainloop():
     while True:
@@ -120,7 +136,8 @@ def mainloop():
         loa = file2list('class2.txt')
         clean('class2.txt')
         Load = Loads + loa
-        Loads = del_dulicate(Load)
+        Load2 = del_dulicate(Load)
+        Loads = del_lec(Load2, 'del.txt')
         for item in Loads:
             item.update_check()
         load2file(Loads)
