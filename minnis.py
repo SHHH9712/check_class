@@ -116,7 +116,7 @@ def del_lec(load, f):
     minus = []
     file = open(f, 'r')
     for i in file.readlines():
-        minus.append(i.spilt())
+        minus.append(i.split())
     file.close()
     clean(f)
     result = []
