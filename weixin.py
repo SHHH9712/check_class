@@ -75,12 +75,12 @@ def reply_statue():
     infile.close()
     return result
     
-def send_notify(code, name, puid, statue):
+def send_notify(code, name, puid1, statue):
     print('push notification to: ' + puid)
-    bot.friends().search(puid = puid).send('{}: {}  状态变更为{}'.format(name, code, statue))
+    bot.friends().search(puid = puid1)[0].send('{}: {}  状态变更为{}'.format(name, code, statue))
     
-def send_msg(puid, msg):
-    ensure_one(bot.friends().search(puid = puid)).send(msg)
+def send_msg(puid1, msg):
+    bot.friends().search(puid = puid1)[0].send(msg)
     
 def add_Lec(code, puid):
 #     Loads.append(Lec(code, puid))
