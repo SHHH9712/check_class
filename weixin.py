@@ -20,7 +20,7 @@ def auto_accept_friends(msg):
     # 接受好友请求
     new_friend = msg.card.accept()
     # 向新的好友发送消息
-    new_friend.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想看自己注册了哪些课，回复：课表')
+    new_friend.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想删除课，示例：del+88888\n如果想看自己注册了哪些课，回复：课表')
     
 @bot.register(Friend, TEXT)
 def reply_text(msg): #add 20099
@@ -30,7 +30,7 @@ def reply_text(msg): #add 20099
         for mail in reply:
             msg.sender.send(mail)
     elif msg.text == "格式":
-        msg.sender.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想看自己注册了哪些课，回复：课表')
+        msg.sender.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想删除课，示例：del+88888\n如果想看自己注册了哪些课，回复：课表')
     elif msg.text == 'mmma':
         classes_content = reply_statue()
         for i in classes_content:
@@ -39,7 +39,7 @@ def reply_text(msg): #add 20099
         code = n_msg[1]
         puid = msg.sender.puid
         add_Lec(code, puid)
-        return 'Success!注册可能需要几秒钟\n课程状态改变后会给你发微信\n如果想看自己注册了哪些课，回复：课表'
+        return 'Success!注册可能需要几秒钟\n课程状态改变后会给你发微信\n如果想删除课，示例：del+88888\n如果想看自己注册了哪些课，回复：课表'
     elif n_msg[0].upper() == 'DEL':
         code = n_msg[1]
         puid = msg.sender.puid
@@ -51,7 +51,7 @@ def reply_text(msg): #add 20099
         clean('classes.txt')
         return 'Success'
     else:
-        msg.sender.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想看自己注册了哪些课，回复：课表')
+        msg.sender.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想删除课，示例：del+88888\n如果想看自己注册了哪些课，回复：课表')
 
     
 def file2reply(puid):
