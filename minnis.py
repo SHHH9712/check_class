@@ -18,16 +18,16 @@ post_2 = '&InstrName=&CourseTitle=&ClassType=ALL&Units=&Days=&StartTime=&EndTime
 check_gap = 2 # Unit = s
 Loads = []
 
-def file2list():
+def file2list(f):
     result = []
-    infile = open('classes.txt', 'r')
+    infile = open(f, 'r')
     for line in infile.readlines():
         if line != '':
             try:
                 result.append(Lec(line.split()[0], line.split()[1], line.split()[2], line.split()[3]))
             except:
                 print('improt error')
-                weixin.send_msg(line.split()[2], '{}这是节假课'.format(line.split()[0]))
+                #weixin.send_msg(line.split()[2], '{}这是节假课'.format(line.split()[0]))
     infile.close()
     return result
 
@@ -91,13 +91,24 @@ class Lec:
             self.statue = new_statue
         
     def notify(self):
-        weixin.send_notify(self.code, self.course_name, self.puid, self.statue)
-        
+        try:
+            weixin.send_notify(self.code, self.course_name, self.puid, self.statue)
+        except:
+            pass
+
+def clean(f):
+    file = open(f, 'w')
+    file.write('')
+    file.close()
+    
         
 def mainloop():
     while True:
         Loads = []
-        Loads = file2list()
+        Loads = file2list('classes.txt')
+        loa = file2list('class2.txt')
+        clean('class2.txt')
+        Loads += loa
         for item in Loads:
             item.update_check()
         load2file(Loads)

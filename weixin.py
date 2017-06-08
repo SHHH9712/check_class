@@ -41,7 +41,7 @@ def reply_text(msg): #add 20099
         add_Lec(code, puid)
         return 'Success!\n课程状态改变后会给你发微信\n如果想看自己注册了哪些课，回复：课表'
     elif msg.text =='cleanall':
-        clean()
+        clean('classes.txt')
         return 'Success'
     else:
         msg.sender.send('吧你想报的课注册在这里,就能在状态改变时收到通知\n注册示例：add+88888\n如果想看自己注册了哪些课，回复：课表')
@@ -69,7 +69,7 @@ def file2reply(puid):
     
 def reply_statue():
     result = []
-    infile = open('classes.txt')
+    infile = open('classes.txt', 'r')
     for line in infile.readlines():
         result.append(' '.join(line.split()))
     infile.close()
@@ -77,19 +77,25 @@ def reply_statue():
     
 def send_notify(code, name, puid1, statue):
     print('push notification to: ' + puid)
-    bot.friends().search(puid = puid1)[0].send('{}: {}  状态变更为{}'.format(name, code, statue))
+    try:
+        bot.friends().search(puid = puid1)[0].send('{}: {}  状态变更为{}'.format(name, code, statue))
+    except:
+        pass
     
 def send_msg(puid1, msg):
-    bot.friends().search(puid = puid1)[0].send(msg)
+    try:
+        bot.friends().search(puid = puid1)[0].send(msg)
+    except:
+        pass
     
 def add_Lec(code, puid):
 #     Loads.append(Lec(code, puid))
-    outfile = open('classes.txt', 'a')
+    outfile = open('class2.txt', 'a')
     outfile.write(code +' NULL '+ puid +' NULL\n')
     outfile.close()
 
-def clean():
-    file = open('classes.txt', 'w')
+def clean(f):
+    file = open(f, 'w')
     file.write('')
     file.close()
     
