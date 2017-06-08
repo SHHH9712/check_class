@@ -100,6 +100,17 @@ def clean(f):
     file = open(f, 'w')
     file.write('')
     file.close()
+
+def del_dulicate(load):
+    result = []
+    for i in load:
+        switch = True
+        for i2 in result:
+            if i.puid == i2.puid and i.code == i2.code:
+                switch = False
+        if switch == True:
+            result.append(i)
+    return result
     
         
 def mainloop():
@@ -108,7 +119,8 @@ def mainloop():
         Loads = file2list('classes.txt')
         loa = file2list('class2.txt')
         clean('class2.txt')
-        Loads += loa
+        Load = Loads + loa
+        Loads = del_dulicate(Load)
         for item in Loads:
             item.update_check()
         load2file(Loads)
